@@ -1,0 +1,8 @@
+
+
+spring init --dependencies=web,data-jpa,thymeleaf,mysql salaoPopular
+
+
+spring scaffold -n "Departamento" -p "name:String endereco:String"
+
+spring scaffold -n "Departamento" -p "name:String endereco:String"

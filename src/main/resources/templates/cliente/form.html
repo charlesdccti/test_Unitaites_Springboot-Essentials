@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>New Cliente</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h1 th:if="${cliente.id == null}">New Cliente</h1>
+		<h1 th:if="${cliente.id != null}">Edit Cliente</h1>
+		<hr />
+		<form th:action="@{/clientes}" th:method="@{${cliente.id == null} ? 'post' : 'put'}"
+			th:object="${cliente}">
+			<input type="hidden" th:field="*{id}" /> 
+			
+				<div class="form-group"> 
+					<label for="name">Name</label>  
+					<input id="name" name="name" type="text" class="form-control" th:field="*{name}" />  
+				</div> 
+				<div class="form-group"> 
+					<label for="idade">Idade</label>  
+					<input id="idade" name="idade" type="text" class="form-control" th:field="*{idade}" />  
+				</div> 
+				<div class="form-group"> 
+					<label for="telefone">Telefone</label>  
+					<input id="telefone" name="telefone" type="number" class="form-control" th:field="*{telefone}" />  
+				</div> 
+
+			<button type="submit" class="btn btn-success">Save</button>
+			<a th:href="@{/clientes}" class="btn btn-default">Back</a>
+		</form>
+	</div>
+</body>
+</html>

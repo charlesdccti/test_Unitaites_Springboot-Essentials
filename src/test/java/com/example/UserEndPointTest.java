@@ -62,15 +62,15 @@ public class UserEndPointTest {
 
     
     @Test
-    public void getStudentsByIdWhenUsernameAndPasswordAreCorrectShouldReturnStatusCode200 () {
+    public void findUserByIdShouldReturnStatusCode200 () {
         User user = new User(1 ,"Charles", "charlesdccti@gmail.com");
         BDDMockito.when(userRepository.findOne(user.getId())).thenReturn(user);
         
         ResponseEntity<String> response = restTemplate.getForEntity("/users/{id}", String.class, user.getId());
         
-        System.out.println(response.getStatusCodeValue());
-        //Assertions.assertThat(response.);
+        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
+        System.out.println(response.getStatusCodeValue());
         System.out.println(response.getBody());
     }
     
@@ -81,22 +81,22 @@ public class UserEndPointTest {
         
         ResponseEntity<User> response = restTemplate.getForEntity("/users/{id}/response", User.class, user.getId());
         
-        System.out.println(response.getStatusCodeValue());
-        //Assertions.assertThat(response.);
+        Assertions.assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
+        System.out.println(response.getStatusCodeValue());
         System.out.println(response.getBody());
     }
 
 
     @Test
-    public void deleteWhenUserHasRoleAdminAndStudentExistsShouldReturnStatusCode200 () {
+    public void deleteWhenUserExistsShouldReturnStatusCode200 () {
         BDDMockito.doNothing().when(userRepository).delete(1);
         ResponseEntity<String> exchange = restTemplate.exchange("/users/{id}", DELETE, null, String.class, 1);
         Assertions.assertThat(exchange.getStatusCodeValue()).isEqualTo(200);
     }
 
     @Test
-    public void deleteWhenUserExistsShouldReturnStatusCode200 () throws Exception {
+    public void delete2WhenUserExistsShouldReturnStatusCode200 () throws Exception {
         //BDDMockito.doNothing().when(userRepository).delete(1);
         mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", 1L))
                 .andExpect(MockMvcResultMatchers.status().isOk());

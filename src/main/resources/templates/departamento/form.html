@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>New Departamento</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h1 th:if="${departamento.id == null}">New Departamento</h1>
+		<h1 th:if="${departamento.id != null}">Edit Departamento</h1>
+		<hr />
+		<form th:action="@{/departamentos}" th:method="@{${departamento.id == null} ? 'post' : 'put'}"
+			th:object="${departamento}">
+			<input type="hidden" th:field="*{id}" /> 
+			
+				<div class="form-group"> 
+					<label for="name">Name</label>  
+					<input id="name" name="name" type="text" class="form-control" th:field="*{name}" />  
+				</div> 
+				<div class="form-group"> 
+					<label for="endereco">Endereco</label>  
+					<input id="endereco" name="endereco" type="text" class="form-control" th:field="*{endereco}" />  
+				</div> 
+
+			<button type="submit" class="btn btn-success">Save</button>
+			<a th:href="@{/departamentos}" class="btn btn-default">Back</a>
+		</form>
+	</div>
+</body>
+</html>

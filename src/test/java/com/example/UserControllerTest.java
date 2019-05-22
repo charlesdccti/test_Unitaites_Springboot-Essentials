@@ -12,12 +12,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserControllerTest extends DemoApplicationTests {
 
     private MockMvc mockMvc;
@@ -44,7 +46,7 @@ public class UserControllerTest extends DemoApplicationTests {
      * name_method: test + Verbo http + metodo chamado + nome do controle testado 
      */
     @Test
-	public void testGETShowUserController() throws Exception {
+	public void test01GETShowUserController() throws Exception {
         User user = userService.save(new User("Charles", "charlesdccti@gmail.com"));
 
 		this.mockMvc.perform(get("/users/"+ user.getId()))
@@ -54,18 +56,20 @@ public class UserControllerTest extends DemoApplicationTests {
     
     
     @Test
-	public void testGETSaveUserController() throws Exception {
+	public void test02GETSaveUserController() throws Exception {
 		this.mockMvc.perform(get("/users/new"))
 			.andExpect(model().attributeExists("user"))	
 			.andExpect(status().isOk());
     }
     
     @Test
-	public void testPOSTSaveUserController() throws Exception {
+	public void test03POSTSaveUserController() throws Exception {
 		this.mockMvc.perform(post("/users")
 				.param("name", "Charles Ferreira")
 				.param("email", "charlesdccti@gmail.com")
-				).andExpect(redirectedUrl("/users/1"));
+				).andExpect(redirectedUrl("/users/2"))
+				 .andExpect(status().isFound());
+				 
 				//.andExpect(model().attributeExists("user"));
 				//.andExpect(status().isOk());
 				//.andExpect(redirectedUrl("/users/21"));
@@ -73,7 +77,7 @@ public class UserControllerTest extends DemoApplicationTests {
     
 
     @Test
-	public void testGETUpdateUserController() throws Exception {
+	public void test04GETUpdateUserController() throws Exception {
         User user = userService.save(new User("Charles", "charlesdccti@gmail.com"));
 
 		this.mockMvc.perform(get("/users/" + user.getId() + "/edit"))
@@ -83,7 +87,7 @@ public class UserControllerTest extends DemoApplicationTests {
 	}
     
     @Test
-	public void test_PUT_Update_UserController() throws Exception {
+	public void test05_PUT_Update_UserController() throws Exception {
         User user = userService.save(new User("Charles", "charlesdccti@gmail.com"));
 
 		System.out.println(user);
@@ -94,12 +98,12 @@ public class UserControllerTest extends DemoApplicationTests {
 				.param("email", "xxx@gmail.com")
 			)
 			.andExpect(redirectedUrl("/users/1"))
-		 	.andExpect(status().isOk());
+		 	.andExpect(status().isFound());
 		
 	}
     
     @Test
-	public void test_DELETE_delete_UserController() throws Exception {
+	public void test06_DELETE_delete_UserController() throws Exception {
         User user = userService.save(new User("Charles", "charlesdccti@gmail.com"));
 
 		this.mockMvc.perform(delete("/users/" + user.getId()))
